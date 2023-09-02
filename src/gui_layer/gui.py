@@ -10,7 +10,7 @@ class MakeWindow:
         self.theme = theme
         self.window = None
 
-    def make_window(self):
+    def make_window(self) -> sg.Window:
         """Create the Graphical User Interface"""
         sg.theme(self.theme)
 
@@ -20,8 +20,8 @@ class MakeWindow:
             [
                 sg.T("Nome do arquivo da planilha base: ", font=("", 14), pad=(0, 10)),
                 sg.In(
-                    default_text="coordenadas_mouse.txt",
-                    key="nome_arq_coordenadas",
+                    default_text="JAN-DEZEMBRO 2023.xlsx",
+                    key="nome_arq_planilha_base",
                     font=("", 14),
                     pad=(0, 10),
                 ),
@@ -31,10 +31,34 @@ class MakeWindow:
                     "Nome do arquivo da nova planilha: ", font=("", 14), pad=((0, 10))
                 ),
                 sg.In(
-                    default_text="ctc_inss_serv.csv",
-                    key="nome_arq_planilha",
+                    key="nome_arq_nova_planilha",
                     font=("", 14),
                     pad=(0, (10)),
+                ),
+            ],
+            [
+                sg.T(
+                    "Selecionar o mês que a nova planilha se refere: ",
+                    font=("", 14),
+                    pad=((0, 10)),
+                ),
+                sg.DropDown(
+                    [
+                        "JAN",
+                        "FEV",
+                        "MAR",
+                        "ABR",
+                        "MAI",
+                        "JUN",
+                        "JUL",
+                        "AGO",
+                        "SET",
+                        "OUT",
+                        "NOV",
+                        "DEZ",
+                    ],
+                    size=(7, None),
+                    key="-DROP-",
                 ),
             ],
             [
@@ -73,7 +97,7 @@ class MakeWindow:
             right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_EXIT,
             keep_on_top=True,
             element_justification="c",
-            size=(750, 250),
+            size=(750, 330),
         )
 
         return self.window

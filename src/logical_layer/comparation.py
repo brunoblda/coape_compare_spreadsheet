@@ -15,32 +15,8 @@ class Comparation:
         self.mes: str = mes
         self.utils: Utils = Utils()
 
-    def base_spreadsheet_higienization(self) -> pd.DataFrame:
+    def base_spreadsheet_higienization(self, planilha_base) -> pd.DataFrame:
         """Realiza a higienizacao da planilha base"""
-        planilha_base: pd.DataFrame = self.utils.xlsx_to_df(
-            self.name_file_planilha_base
-        )
-        colunas: list[str] = [
-            "Matrícula",
-            "SITUAÇÃO FUNCIONAL",
-            "UNIDADE",
-            "Unnamed: 3",
-            "OBSERVAÇÕES",
-            "SERVIDOR",
-            "JAN",
-            "FEV",
-            "MAR",
-            "ABR",
-            "MAI",
-            "JUN",
-            "JUL",
-            "AGO",
-            "SET",
-            "OUT",
-            "NOV",
-            "DEZ",
-        ]
-        planilha_base: pd.DataFrame = planilha_base[colunas]
         col_siape_planilha_base: pd.DataFrame = planilha_base["Matrícula"].apply(
             lambda x: str(x).zfill(7)
         )
@@ -75,12 +51,38 @@ class Comparation:
     def create_spreadsheet_compared(self) -> None:
         """Retorna planilha de comparacao da planilha base com a nova planilha"""
 
-        planilha_base_higienizada: pd.DataFrame = self.base_spreadsheet_higienization()
-        planilha_nova_higienizada: pd.DataFrame = self.new_spreadsheet_higienization()
-
-        nova_planilha_base: pd.DataFrame = self.utils.xlsx_to_df(
+        planilha_base: pd.DataFrame = self.utils.xlsx_to_df(
             self.name_file_planilha_base
         )
+        colunas: list[str] = [
+            "Matrícula",
+            "SITUAÇÃO FUNCIONAL",
+            "UNIDADE",
+            "Unnamed: 3",
+            "OBSERVAÇÕES",
+            "SERVIDOR",
+            "JAN",
+            "FEV",
+            "MAR",
+            "ABR",
+            "MAI",
+            "JUN",
+            "JUL",
+            "AGO",
+            "SET",
+            "OUT",
+            "NOV",
+            "DEZ",
+        ]
+
+        planilha_base: pd.DataFrame = planilha_base[colunas]
+
+        planilha_base_higienizada: pd.DataFrame = self.base_spreadsheet_higienization(
+            planilha_base
+        )
+        planilha_nova_higienizada: pd.DataFrame = self.new_spreadsheet_higienization()
+
+        nova_planilha_base: pd.DataFrame = planilha_base
 
         for ind in planilha_base_higienizada.index:
             if planilha_base_higienizada[ind] in set(planilha_nova_higienizada):
