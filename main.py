@@ -40,7 +40,12 @@ def main() -> None:
             elif window_show["-DROP-"].get() == "":
                 window_show["text_execucao"].update("       Mês não selecionado.")
             else:
-                execute_comparation(window_show=window_show)
+                try:
+                    execute_comparation(window_show=window_show)
+                except KeyError:
+                    window_show["text_execucao"].update(
+                        "Formato dos arquivos incorreto."
+                    )
 
     window_show.close()
 
